@@ -13,8 +13,8 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AddioAlCelimatte</title>
-  <script type="module" crossorigin src="./assets/index-Bg8WyUUu.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-8H6tkW5B.css">
+  <script type="module" crossorigin src="./assets/index-BT3pb8QX.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CulGkXWG.css">
 </head>
 
 <body>
@@ -27,7 +27,7 @@
 
       </header>
       <div class="homescreen-container">
-        <img src="./assets/Matte16bitPNG-BpmPYVrK.png">
+        <img class="homescreenImg" src="./assets/Matte16bitPNG-BpmPYVrK.png">
       </div>
 
       <div class="button-bottom-container">
@@ -48,7 +48,7 @@
 
       </div>
       <div class="button-bottom-container">
-        <button id="btnPlay" class="button-bottom">Skin sbloccate</button>
+        <button id="openSkinDialogBtn" class="button-bottom">Skin sbloccate</button>
       </div>
     </section>
 
@@ -56,11 +56,35 @@
   <!--DIALOG-->
   <dialog id="dialog" class="dialog-style">
     <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Prima di cominciare...</h2>
-    <p id="dialogContent">Vuoi riprovare?</p>
+    <p id="dialogContent"></p>
     <div class="dialog-actions">
       <button id="closeDialogBtn" class="button-bottom">Acc' capit</button>
+    </div>
+
+  </dialog>
+
+  <dialog id="skinDialog" class="dialog-style">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Skin sbloccate</h2>
+    <p id="dialogContent"></p>
+    <div class="skin-container">
+
+      <div class="skinContainer">
+        <img class="skinImg" src="./assets/questionMark-B2Jln1MQ.png">
+        <label id="skin1Name">Unknown</label>
+      </div>
+
+      <div class="skinContainer">
+        <img class="skinImg" src="./assets/questionMark-B2Jln1MQ.png">
+        <label id="skin2Name">Unknown</label>
+      </div>
+
+      <div class="skinContainer">
+        <img class="skinImg" src="./assets/questionMark-B2Jln1MQ.png">
+        <label id="skin3Name">Unknown</label>
+      </div>
 
     </div>
+    <button id="closeSkinDialogBtn" class="button-bottom">Acc' capit</button>
   </dialog>
 </body>
 
