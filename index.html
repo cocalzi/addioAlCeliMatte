@@ -13,8 +13,8 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>AddioAlCelimatte</title>
-  <script type="module" crossorigin src="./assets/index-D2DmaEji.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DsdY4tm-.css">
+  <script type="module" crossorigin src="./assets/index-Bvc18p82.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BCm7xoMp.css">
 </head>
 
 <body>
@@ -56,12 +56,19 @@
     </section>
 
     <section id="flappyBirdSection">
-      <header>
-        <button id="closeFlappyCelibeBtn">⏴</button>
-      </header>
-      <canvas id="flappyBirdCanvas" width="400" height="500">
+      <header id="inGameHeader" class="header-game">
 
-      </canvas>
+        <button id="closeFlappyCelibeBtn" class="back-ingame-button">&lt</button>
+
+        <!--<label id="flappyCelibeScoreLabel">Score: 0/50 </label>-->
+        <div>Score: <span id="flappyCelibeScoreLabel">0</span></div>
+
+      </header>
+      <div id="FCCanvasContainer">
+        <!--<canvas id="flappyBirdCanvas" width="400" height="500">-->
+        <canvas id="flappyBirdCanvas"></canvas>
+        </canvas>
+      </div>
     </section>
 
   </main>
@@ -98,6 +105,9 @@
     </div>
     <button id="closeSkinDialogBtn" class="button-bottom">Acc' capit</button>
   </dialog>
+
+  <!-- ------INIZIO DIALOG GIOCHI ------ -->
+  <!--<dialog id="flappyCelibeGameOver"></dialog>-->
 </body>
 
 </html>
