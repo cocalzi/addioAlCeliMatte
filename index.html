@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="resources/Matte16bitPNG.png" />
+
+  <!--Google Font-->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Honk:MORF@15&family=Jersey+15&display=swap" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>AddioAlCelimatte</title>
+  <script type="module" crossorigin src="/addioAlCeliMatte/assets/index-DeEVbSTH.js"></script>
+  <link rel="stylesheet" crossorigin href="/addioAlCeliMatte/assets/index-C26RFvUh.css">
+</head>
+
+<body>
+  <main>
+    <section id="home">
+
+      <header class="header-style">
+        <p style="margin: 0; font-family: 'Jersey 15', sans-serif; font-size: 1.5rem">11.07.2026</p>
+        <h3 style="margin: 0">Addio al</h3>
+        <h1 class="big-title">CeliMatte</h1>
+      </header>
+
+      <div class="homescreen-container">
+        <img class="homescreenImgFront" src="/addioAlCeliMatte/resources/Matte16bitPNG.png">
+        <img class="homescreenImgBack" src="/addioAlCeliMatte/resources/elisa1.png">
+      </div>
+
+      <div class="button-bottom-container">
+        <button id="btnHome" class="button-bottom">Inizia</button>
+      </div>
+    </section>
+
+    <section id="chooseMinigame">
+      <header id="inGameHeader" class="header-game">
+        <button id="closeGamesSection" class="back-ingame-button">&lt;</button>
+        <span>Scegli il minigioco<span>
+      </header>
+      <div id="chooseGameContainer" class="chooseGame-container">
+        <label>Minigiochi disponibili</label>
+
+        <button id="flapppyCelibeBtn" class="chooseGame-btn-style">Flappy Celibe ►</button>
+        <button id="memeMemoryBtn" class="chooseGame-btn-style">Memory Wife ►</button>
+        <button id="chronoMadnessBtn" class="chooseGame-btn-style">Chronologic Madness ►</button>
+        <button id="finalBossBtn" class="chooseGame-btn-style">Final Boss ►</button>
+
+      </div>
+      <div class="button-bottom-container">
+        <button id="openSkinDialogBtn" class="button-bottom">Skin sbloccate</button>
+      </div>
+    </section>
+
+    <section id="flappyBirdSection">
+      <header id="inGameHeader" class="header-game">
+
+        <button id="closeFlappyCelibeBtn" class="back-ingame-button">&lt;</button>
+
+        <!--<label id="flappyCelibeScoreLabel">Score: 0/50 </label>-->
+        <div>Score: <span id="flappyCelibeScoreLabel">0</span></div>
+
+      </header>
+      <div id="FCCanvasContainer">
+        <!--<canvas id="flappyBirdCanvas" width="400" height="500">-->
+        <!-- Loading Screen -->
+        <div id="loadingScreen" class="hide">
+          <p>LOADING...</p>
+        </div>
+        <canvas id="flappyBirdCanvas"></canvas>
+        </canvas>
+      </div>
+    </section>
+    <section id="memorySection">
+      <header id="inGameHeader" class="header-game">
+
+        <button id="closeMemoryBtn" class="back-ingame-button">&lt;</button>
+
+        <!--<label id="flappyCelibeScoreLabel">Score: 0/50 </label>-->
+        <div>Score: <span id="memoryScore">0</span></div>
+
+      </header>
+
+      <div id="memoryContainer">
+      </div>
+      <div id="avatar"></div>
+    </section>
+    <section id="chronoMadnessSection">
+      <header id="inGameHeader" class="header-game">
+        <button id="closeChronoMadnessBtn" class="back-ingame-button">&lt;</button>
+        <div>Corretti: <span id="memoryScore">0</span></div>
+      </header>
+      <div id="chronoMadnessContainer" style="overflow-y: auto; padding-bottom: 180px;">
+
+      </div>
+      <div id="avatarChronoMadnessMatte"></div>
+      <div id="avatarChronoMadnessElisa"></div>
+
+    </section>
+
+    <!--<div id="app"> -->
+    <section id="finalBoss"> <!--tolta class = "hide final-boss-layout"-->
+      <header id="inGameHeader" class="header-game">
+        <button id="closeFinalBossBtn" class="back-ingame-button">&lt;</button>
+        <div>Domanda: <span id="fb-header">1/10</span></div>
+      </header>
+
+      <div id="fb-question-box" class="question-box">
+      </div>
+
+      <div id="fb-options-container" class="options-container">
+      </div>
+
+      <div class="avatars-container">
+        <img id="fb-groom-avatar" src="./resources/matteDefault.png" alt="Sposo" />
+        <img id="fb-bride-avatar" src="./resources/elisaDefault.png" alt="Sposa" />
+      </div>
+    </section>
+    <!--</div>-->
+
+  </main>
+  <!--DIALOG-->
+  <dialog id="dialog" class="dialog-style">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Prima di cominciare...</h2>
+    <p id="dialogContent"></p>
+    <div class="dialog-actions">
+      <button id="closeDialogBtn" class="button-bottom">Acc' capit</button>
+    </div>
+
+  </dialog>
+
+  <dialog id="skinDialog" class="dialog-style">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Skin sbloccate</h2>
+    <p id="dialogContent"></p>
+    <div class="skin-container">
+
+      <div class="skinContainer">
+        <img class="skinImg" src="/addioAlCeliMatte/resources/questionMark.png">
+        <label id="skin1Name">Unknown</label>
+      </div>
+
+      <div class="skinContainer">
+        <img class="skinImg" src="/addioAlCeliMatte/resources/questionMark.png">
+        <label id="skin2Name">Unknown</label>
+      </div>
+
+      <div class="skinContainer">
+        <img class="skinImg" src="/addioAlCeliMatte/resources/questionMark.png">
+        <label id="skin3Name">Unknown</label>
+      </div>
+
+    </div>
+    <button id="closeSkinDialogBtn" class="button-bottom">Acc' capit</button>
+  </dialog>
+
+  <!-- ------INIZIO DIALOG GIOCHI ------ -->
+  <!--Flappy Celibe-->
+  <dialog id="flappyCelibeOpeningDialog">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Flappy Celibe</h2>
+    <p id="dialogContent">Istruzioni</p>
+    <div class="dialog-actions">
+      <button id="playFlappyCelibe" class="button-bottom">Gioca</button>
+      <button id="closeFlappyCelibeDialog" class="button-bottom">Chiudi</button>
+    </div>
+  </dialog>
+  <!--Memory-->
+  <dialog id="memoryOpeningDialog">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Memory Wife</h2>
+    <p id="dialogContent">Istruzioni</p>
+    <div class="dialog-actions">
+      <button id="playMemory" class="button-bottom">Gioca</button>
+      <button id="closeMemoryDialog" class="button-bottom">Chiudi</button>
+    </div>
+  </dialog>
+  <!--Chronologic Madness-->
+  <dialog id="chronoMadnessOpeningDialog">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Chronologic Madness</h2>
+    <p id="dialogContent">Istruzioni</p>
+    <div class="dialog-actions">
+      <button id="playChronoMadness" class="button-bottom">Gioca</button>
+      <button id="closeChronoMadnessDialog" class="button-bottom">Chiudi</button>
+    </div>
+  </dialog>
+  <dialog id="fb-result-dialog" class="result-dialog">
+    <h3 id="fb-dialog-text"></h3>
+    <button id="fb-dialog-btn"></button>
+  </dialog>
+</body>
+
+</html>
