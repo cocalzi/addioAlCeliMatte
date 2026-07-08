@@ -8,7 +8,7 @@ interface Question {
 
 // MOCK DI DOMANDE (Da sostituire con quelle vere)
 const questions: Question[] = Array.from({ length: 10 }, (_, i) => ({
-    text: `Questa è la domanda molto imbarazzante numero ${i + 1}?`,
+    text: `Domanda random numero ${i + 1}?`,
     options: ['Risposta A', 'Risposta B', 'Risposta C', 'Risposta D'],
     correctIndex: Math.floor(Math.random() * 4) // Indice random per test
 }));
@@ -20,14 +20,12 @@ const AVATARS = {
         default: './resources/matteDefault.png',
         correct: './resources/matteCorretto.png',
         error: './resources/matteErrore.png'
-
     },
 
     bride: {
         default: './resources/elisaDefault.png',
         correct: './resources/elisaCorretto.png',
         error: './resources/elisaErrore.png'
-
     }
 };
 
