@@ -1,0 +1,666 @@
+:root {
+  /* 1. MODIFICA SOLO QUESTA VARIABILE per ingrandire o rimpicciolire l'avatar sullo schermo */
+  --avatar-width: 850px;
+
+  /* 2. Calcoli automatici basati sulle tue dimensioni esatte (1300 / 500 = 2.6) */
+  --avatar-height: calc(var(--avatar-width) * 2.6);
+  --sprite-total-width: calc(var(--avatar-width) * 4); /* 4 frame totali */
+}
+
+* {
+  box-sizing: border-box;
+  /*font-family: "Micro 5", sans-serif;*/
+}
+
+*::before,
+*::after {
+  box-sizing: border-box; /* Risolve il problema che, se in body fai width = 100% e poi gli dai un padding, allora
+  trasborda dalla grandezza dello schermo di una lunghezza/larghezza uguale al padding  */
+}
+
+html,
+body {
+  background-image: linear-gradient(to bottom, rgb(0, 11, 161), rgb(0, 6, 85));
+  color: white;
+  margin: 0;
+  padding: 0;
+  width: 100%; /*prese in percentuale  RISPETTO ALLA WIDTH/HEIGHT DEL GENITORE!*/
+  height: 100%;
+  font-family: "Jersey 15", sans-serif;
+  overflow: hidden; /* Impedisce il fastidioso effetto "rimbalzo" (overscroll) su mobile */
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.big-title {
+  font-size: rem;
+  margin: 0;
+  /*
+  margin-top: -3rem;
+  margin-bottom: -0.5rem;
+  */
+}
+
+header {
+  text-align: center;
+  font-size: 2rem;
+  /*background-color: white;*/
+}
+
+.header-style {
+  font-family: "Honk", system-ui;
+}
+
+input {
+  text-align: center;
+}
+
+.button-bottom-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+.buttonGame-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section {
+  height: 100dvh; /* Usa dvh (Dynamic Viewport Height). Risolve il problema delle barre mobili! Edit: da provare. Calcola dinamicamente la misura dell'altezza */
+  width: 100%;
+
+  /* Layout a griglia verticale */
+  display: grid;
+  /* header prende lo spazio che gli serve (auto), 
+     main prende tutto il resto (1fr), ma SOLO se il genitore ha un'altezza ben definita. con Height 100dvh ce l'ha. 
+     footer prende lo spazio che gli serve (auto) */
+  grid-template-rows: auto 1fr auto;
+}
+
+.homescreen-container {
+  position: relative;
+  display: flex;
+  /*overflow-y: auto;*/
+  overflow-y: hidden;
+  justify-content: center;
+  overflow-x: hidden; /*solo nella homescreen, per problemi di layout con l'immagine.*/
+}
+
+.homescreenImgFront {
+  position: absolute; /*Permette di avere la posizione fissata*/
+  width: 80vw;
+  height: auto;
+  align-self: center;
+  animation: fluttua 3s linear infinite;
+  z-index: 2;
+}
+
+.homescreenImgBack {
+  position: absolute;
+  top: +55%; /* Sposta in alto rispetto al bordo superiore del contenitore */
+  right: -22%; /* Sposta a destra rispetto al bordo destro del contenitore */
+  width: 80vw;
+  height: auto;
+  /* Sta sotto */
+  z-index: 1;
+  animation: tilt 6s linear infinite;
+}
+
+.skinImg {
+  width: 50vw;
+  height: auto;
+  align-self: center;
+}
+
+.hide {
+  display: none !important;
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(-12deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes fluttua {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(+20px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.button-bottom {
+  /*
+  font-size: 2rem;
+  padding: 1rem;
+  padding-inline: 2rem;
+  border-radius: 30px;
+  transition: all 0.1s;
+  */
+  /* Font e Testo */
+
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  /* Allineamento e Padding */
+  display: inline-block;
+  padding: 20px 40px;
+  cursor: pointer;
+  background-color: #e52521; /* Rosso stile Nintendo */
+
+  /* Reset dei bordi nativi */
+  border: none;
+  outline: none;
+  position: relative;
+
+  /* Il trucco dei Pixel: crea il classico bordo scalettato */
+  box-shadow:
+    0 -4px 0 0 #000000,
+    0 4px 0 0 #000000,
+    -4px 0 0 0 #000000,
+    4px 0 0 0 #000000;
+
+  /* Previene anti-aliasing per mantenere i pixel nitidi */
+  image-rendering: pixelated;
+}
+
+.button:active {
+  /*
+  transform: scale(0.9);
+  */
+  /* Sposta il bottone leggermente in basso per simulare la pressione */
+  top: 4px;
+
+  /* Modifica l'ombra per compensare lo spostamento */
+  box-shadow:
+    0 -4px 0 0 #000000,
+    0 0px 0 0 #000000,
+    -4px -4px 0 0 #000000,
+    4px -4px 0 0 #000000;
+}
+
+.back-ingame-button {
+  font-size: 1.5rem;
+  background-color: #e52521; /* Rosso stile Nintendo */
+  padding-inline: 1rem;
+}
+
+.chooseGame-container {
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  margin: 12px;
+  gap: 1rem;
+}
+
+.game-non-active {
+  background-color: rgb(81, 81, 81);
+}
+
+input {
+  font-size: 1.5rem;
+  width: 60%;
+  border-radius: 10px;
+}
+
+.chooseGame-btn-style {
+  font-size: 1.5rem;
+  border-radius: 10px;
+  /*height: 2.2rem;*/
+  padding-inline: 6rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.cover-word-container {
+  color: transparent;
+}
+
+h2 {
+  text-align: center;
+}
+
+/*---STILE DIALOG---*/
+
+/* La finestra di dialogo */
+.dialog-style {
+  background-color: #111;
+  color: white;
+  font-family: "Jersey 15", sans-serif;
+  font-size: 1.5rem;
+  padding: 10px;
+
+  /* Stesso trucco dei pixel del bottone */
+  border: none;
+  box-shadow:
+    0 -6px 0 0 #000,
+    0 6px 0 0 #000,
+    -6px 0 0 0 #000,
+    6px 0 0 0 #000;
+
+  /* Centratura automatica del browser quando aperto */
+  max-width: 90vw;
+  width: 400px;
+  text-align: center;
+}
+
+/* Lo sfondo scuro che copre la webapp (il "backdrop") */
+.pixel-dialog::backdrop {
+  /* Un nero semitrasparente. Puoi usare anche un effetto pixelato se vuoi! */
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Rimuove l'effetto sfocatura moderno che romperebbe il look 8-bit */
+  backdrop-filter: none;
+}
+
+.skin-container {
+  display: flex;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+#flappyBirdCanvas {
+  /* Disabilita tutte le gesture native del browser (zoom, scroll, pinch) su questo elemento */
+  touch-action: none;
+}
+
+.header-game {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  justify-content: space-between;
+}
+
+#FCCanvasContainer {
+  /* flex: 1 dice al div: "prenditi tutto lo spazio in altezza che avanza dopo l'header" */
+  flex: 1;
+  display: flex;
+  justify-content: center; /* Se vuoi centrare il canvas orizzontalmente */
+  overflow: hidden;
+}
+
+/* -----------------------------GIOCHINO MEMORY ---------------------*/
+
+/* style.css */
+.hidden {
+  display: none !important;
+}
+
+#memoryContainer {
+  /*
+  display: grid;
+  grid-template-columns: repeat(4); 
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  */
+
+  display: grid;
+  width: 100dvw; /* Larghezza dinamica del viewport */
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(12, ifr); /* 2 righe che si adattano al contenuto */
+  gap: 3px; /* Spazio opzionale tra le celle */
+
+  overflow-y: auto;
+  padding-bottom: 180px;
+}
+
+.card {
+  width: 18dvw;
+  height: 18dvw;
+  background-color: transparent;
+  perspective: 1000px; /* Profondità della scena 3D */
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); /* Curva di animazione più naturale */
+  transform-style: preserve-3d; /* Mantiene i figli nello spazio 3D */
+}
+
+/* Quando la carta riceve la classe .flipped, l'interno ruota di 180° sull'asse orizzontale */
+.card.flipped .card-inner {
+  transform: rotateX(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Nasconde la faccia che punta in direzione opposta allo schermo */
+  border-radius: 8px;
+}
+
+.card-front {
+  background-color: #333;
+}
+
+.card-back {
+  /* Pre-ruotiamo la faccia con l'immagine di 180° in modo che diventi visibile 
+     solo quando il contenitore padre .card-inner ruota a sua volta */
+  transform: rotateX(180deg);
+}
+
+.card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Avatar */
+
+#avatar {
+  position: fixed;
+  bottom: -15%;
+  right: 50%;
+  width: 250px; /* Larghezza di un SINGOLO frame */
+  height: 250px; /* Altezza del frame */
+  background-image: url("/resources/matteAvatar.png"); /* Immagine base (fermo) */
+
+  background-size: contain; /* Adatta l'immagine al div senza tagliarla */
+  background-repeat: no-repeat; /* Evita che l'immagine si ripeta a mosaico */
+  background-position: bottom center; /* La allinea in basso */
+  z-index: 100;
+  pointer-events: none;
+  transform-origin: bottom center;
+}
+
+/* --- ANIMAZIONE GIOIA --- */
+.anim-joy {
+  background-image: url("/resources/matteHappy.png") !important;
+  /* Assumendo 6 fotogrammi, eseguiamo l'animazione in 0.6 secondi, ripetendola 1 volta */
+  animation: jump 0.4s ease-in-out;
+}
+
+/* --- ANIMAZIONE FRUSTRAZIONE --- */
+.anim-frustration {
+  background-image: url("/resources/matteRage.png") !important;
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes jump {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-30px) scale(1.05);
+  } /* Va su e si ingrandisce un po' */
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+}
+
+/*--------- CHRONOLOGIC MADNESS ----------*/
+
+#lista-eventi {
+  list-style: none;
+  padding: 0;
+  max-width: 400px;
+}
+
+.evento-item {
+  font-size: 1.5rem;
+  padding: 1.5rem;
+  margin: 8px 0;
+  /*background-color: #f3f4f6;*/
+  background-color: #e52521;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: grab;
+  transition: transform 0.1s;
+}
+
+.evento-item:active {
+  cursor: grabbing;
+}
+
+.evento-item.dragging {
+  opacity: 0.5;
+  color: #000;
+  background-color: #e5e7eb;
+}
+
+/* Avatar di default */
+
+#avatarChronoMadnessMatte {
+  position: fixed;
+  bottom: -15%;
+  right: 50%;
+  width: 250px; /* Larghezza di un SINGOLO frame */
+  height: 250px; /* Altezza del frame */
+  background-image: url("/resources/matteDefault.png"); /* Immagine base (fermo) */
+
+  background-size: contain; /* Adatta l'immagine al div senza tagliarla */
+  background-repeat: no-repeat; /* Evita che l'immagine si ripeta a mosaico */
+  background-position: bottom center; /* La allinea in basso */
+  z-index: 100;
+  pointer-events: none;
+  transform-origin: bottom center;
+}
+
+#avatarChronoMadnessElisa {
+  position: fixed;
+  bottom: -15%;
+  right: -15%;
+  width: 250px; /* Larghezza di un SINGOLO frame */
+  height: 250px; /* Altezza del frame */
+  background-image: url("/resources/elisaDefault.png"); /* Immagine base (fermo) */
+
+  background-size: contain; /* Adatta l'immagine al div senza tagliarla */
+  background-repeat: no-repeat; /* Evita che l'immagine si ripeta a mosaico */
+  background-position: bottom center; /* La allinea in basso */
+  z-index: 100;
+  pointer-events: none;
+  transform-origin: bottom center;
+}
+
+.anim-correct-matte {
+  background-image: url("/resources/matteCorretto.png") !important;
+  animation: jump 1s ease-in-out;
+}
+
+.anim-error-matte {
+  background-image: url("/resources/matteErrore.png") !important;
+  animation: smaller 1s linear;
+}
+
+.anim-correct-elisa {
+  background-image: url("/resources/elisaCorretto.png") !important;
+  animation: closer 1s ease-in-out;
+}
+
+.anim-error-elisa {
+  background-image: url("/resources/elisaErrore.png") !important;
+  animation: bigger 1s linear;
+}
+
+@keyframes bigger {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  75% {
+    transform: scale(1.4);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes smaller {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.98);
+  }
+  50% {
+    transform: scale(0.96);
+  }
+  75% {
+    transform: scale(0.94);
+  }
+  80% {
+    transform: scale(0.98);
+  }
+}
+
+@keyframes closer {
+  0%,
+  100% {
+    transform: translateX(-20px);
+  }
+  50% {
+    transform: translateX(-40px); /*scale(1.05);*/
+  }
+}
+
+/*---LOADING SCREEN FLAPPY CELIBE---*/
+#loadingScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Assicura che stia sopra il canvas */
+  /* Se hai importato un font pixelato a 16-bit, usalo qui! */
+  font-family: "Courier New", Courier, monospace;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Animazione lampeggiante stile sala giochi anni '90 */
+#loadingScreen p {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* --------- Final Boss ----------*/
+
+.final-boss-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh; /* O l'altezza che preferisci */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.options-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.options-container button {
+  padding: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Classi di feedback assegnate tramite TS */
+.btn-correct {
+  background-color: #4caf50 !important;
+  color: white;
+}
+
+.btn-wrong {
+  background-color: #f44336 !important;
+  color: white;
+}
+
+.avatars-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 20px;
+}
+
+.avatars-container img {
+  height: 200px; /* Regola in base ai tuoi PNG */
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* Piccola animazione per enfatizzare le reazioni */
+.animate-reaction {
+  transform: scale(1.1);
+}
