@@ -115,7 +115,7 @@ section {
   animation: tilt 6s linear infinite;
 }
 
-.skinContainer{
+.skinContainer {
   display: flex;
   flex-direction: column;
   margin: 1rem;
@@ -301,6 +301,10 @@ h2 {
 #flappyBirdCanvas {
   /* Disabilita tutte le gesture native del browser (zoom, scroll, pinch) su questo elemento */
   touch-action: none;
+  /*Per prevenire i bordi laterali vuoti del canvas*/
+  width: 100vw;
+  margin: 0;
+  padding: 0;
 }
 
 .header-game {
@@ -314,8 +318,9 @@ h2 {
   /* flex: 1 dice al div: "prenditi tutto lo spazio in altezza che avanza dopo l'header" */
   flex: 1;
   display: flex;
-  justify-content: center; /* Se vuoi centrare il canvas orizzontalmente */
+  justify-content: center; 
   overflow: hidden;
+  
 }
 
 /* -----------------------------GIOCHINO MEMORY ---------------------*/

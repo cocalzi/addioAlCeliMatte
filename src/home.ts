@@ -1,7 +1,8 @@
 import { preloadImage, initFlappyCelibe, destroyFlappyCelibe } from "./flappyCelibe";
 import { initMemory, destroyMemory } from "./memory";
 import { SoundEffect } from "./flappyCelibe";
-import { initFinalBoss } from "./finalBoss";
+import { initFinalBoss, destroyFinalBoss } from "./finalBoss";
+
 
 const homeButtonSoundEffect = new SoundEffect('./resources/startSound.wav', 1, false);
 const genericButtonSoundEffect = new SoundEffect('./resources/genericbuttonSound2.mp3', 1, false);
@@ -243,6 +244,8 @@ export function initHome() {
         chooseMinigameScreen?.classList.remove("hide");
         finalBossSection?.classList.add('hide');
         genericButtonSoundEffect.play();
+
+        destroyFinalBoss();
     });
 
 

@@ -8,7 +8,7 @@ const PIPE_WIDTH = 60;
 const PIPE_GAP = 140; // Spazio verticale in cui lo sposo deve passare
 const SCORE_GOAL = 10;
 
-let gameFinished = false;
+
 let animationFrameId: number | null = null;
 let boundPointerListener: (() => void) | null = null;
 let scoreLabel: HTMLLabelElement | null = null;
@@ -320,6 +320,10 @@ export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElemen
         'resources/spesa.png',
         'resources/trasloco.png'
     ];
+
+    GRAVITY = 1500;
+    let gameFinished = false;
+
     imagePaths.forEach(path => {
         const img = new Image();
         img.src = path;
@@ -484,7 +488,7 @@ export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElemen
             }
 
             quitFlappyCelibeGameBtn?.addEventListener("click", () => {
-                genericButtonSoundEffect.play();    
+                genericButtonSoundEffect.play();
                 endGameDialog.close();
 
                 destroyFlappyCelibe();
