@@ -1,14 +1,22 @@
 import { SoundEffect } from "./flappyCelibe";
 
-//let soundtrack: SoundEffect | null = null;
+let soundtrack: SoundEffect | null = null;
 
 export function initMemory(containerId: string) {
-
+    /*
+        setTimeout(() => {
+            endMemoryGame();
+        }, 1000);
+    */
     //function preloadImages() {
     const cachedImages = [
-        '/resources/matteHappy.png',
-        '/resources/matteRage.png'
+        './resources/matteHappy.png',
+        './resources/matteRage.png'
     ];
+
+    const gameCompletedSound = new SoundEffect("./resources/gameCompleted.mp3", 1, false);
+    const cardSwipeSound = new SoundEffect("./resources/cardSwipe.mp3", 1, false);
+
 
     cachedImages.forEach(src => {
         const img = new Image();
@@ -20,12 +28,18 @@ export function initMemory(containerId: string) {
     let firstCard: HTMLElement | null = null;
     let secondCard: HTMLElement | null = null;
     let lockBoard = false; // Previene click durante l'animazione di errore
+    const endGameDialog = document.getElementById("memoryEndGameDialog") as HTMLDialogElement;
+    const scoreSpan = document.getElementById("memoryScore") as HTMLSpanElement;
+
+    let score: number = 0;
 
     const errorSoundEffects: SoundEffect[] = [
         new SoundEffect('./resources/pufferFish.mp3', 1, false),
         new SoundEffect('./resources/faaah.mp3', 1, false),
     ];
-    //soundtrack = new SoundEffect('./resources/theLastQuarter.mp3', 0.3, true);
+
+    const correctSoundEffect: SoundEffect = new SoundEffect("./resources/peffo.mp3", 1, false);
+    soundtrack = new SoundEffect('./resources/oraDelloSbusto.mp3', 1, true);
 
     //./resources/faaah.mp3
 
@@ -44,26 +58,10 @@ export function initMemory(containerId: string) {
         'resources/memElisa11.jpg',
         'resources/memElisa12.jpg',
         'resources/memElisa13.jpg',
-        'resources/memElisa14.jpg',
-        'resources/memElisa15.jpg',
-        'resources/memElisa16.jpg',
-        'resources/memElisa17.jpg',
-        'resources/memElisa18.jpg',
-        'resources/memElisa19.jpg',
-        'resources/memElisa20.jpg',
-        'resources/memElisa21.jpg',
-        'resources/memElisa22.jpg',
-        'resources/memElisa23.jpg',
-        'resources/memElisa24.jpg',
-        'resources/memElisa25.jpg',
-        'resources/memElisa26.jpg',
-        'resources/memElisa27.jpg',
-        'resources/memElisa28.jpg',
-        'resources/memElisa29.jpg',
-        'resources/memElisa30.jpg',
+        'resources/memElisa14.jpg'
     ];
 
-    //soundtrack.play();
+    soundtrack.play();
     boardElement = document.getElementById(containerId) as HTMLElement;
     boardElement.innerHTML = ''; // Pulisce la griglia se si riavvia
 
@@ -115,6 +113,7 @@ export function initMemory(containerId: string) {
     });
 
     function flipCard(this: HTMLElement) {
+        cardSwipeSound.play();
         if (lockBoard) return;
         if (this === firstCard) return;
 
@@ -135,7 +134,15 @@ export function initMemory(containerId: string) {
         const isMatch = firstCard?.dataset.image === secondCard?.dataset.image;
         playGroomAnimation(isMatch ? 'joy' : 'frustration');
         if (isMatch) {
+            setTimeout(() => {
+                correctSoundEffect.play();
+            }, 250);
             disableCards();
+            score++;
+            scoreSpan.innerHTML = `${score}/14`;
+            if (score >= 14) {
+                setTimeout(endMemoryGame, 1000);
+            };
         } else {
             unflipCards();
             setTimeout(() => {
@@ -201,10 +208,30 @@ export function initMemory(containerId: string) {
         [firstCard, secondCard, lockBoard] = [null, null, false];
     }
 
+    function endMemoryGame(): void {
+        gameCompletedSound.play();
+        const quitMemoryGameBtn = document.getElementById("quitMemoryGameBtn");
+        endGameDialog.showModal();
+
+        quitMemoryGameBtn?.addEventListener("click", () => {
+            endGameDialog.close();
+            destroyMemory();
+
+            const memorySection = document.getElementById("memorySection");
+            const chooseMinigameScreen = document.getElementById("chooseMinigame");
+
+            chooseMinigameScreen?.classList.remove("hide");
+            memorySection?.classList.add("hide");
+
+            //genericButtonSoundEffect.play();
+        })
+
+    }
+
 }
 
 export function destroyMemory(): void {
-    //soundtrack?.stop();
-    //soundtrack = null;
+    soundtrack?.stop();
+    soundtrack = null;
 }
 

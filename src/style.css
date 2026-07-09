@@ -330,7 +330,7 @@ h2 {
 
   display: grid;
   width: 100dvw; /* Larghezza dinamica del viewport */
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(12, ifr); /* 2 righe che si adattano al contenuto */
   gap: 3px; /* Spazio opzionale tra le celle */
 
@@ -339,8 +339,8 @@ h2 {
 }
 
 .card {
-  width: 18dvw;
-  height: 18dvw;
+  width: 23dvw;
+  height: 23dvw;
   background-color: transparent;
   perspective: 1000px; /* Profondità della scena 3D */
   cursor: pointer;

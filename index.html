@@ -80,7 +80,7 @@
         <button id="closeMemoryBtn" class="back-ingame-button">&lt;</button>
 
         <!--<label id="flappyCelibeScoreLabel">Score: 0/50 </label>-->
-        <div>Score: <span id="memoryScore">0</span></div>
+        <div>Score: <span id="memoryScore">0/14</span></div>
 
       </header>
 
@@ -173,6 +173,13 @@
     <div class="dialog-actions">
       <button id="playMemory" class="button-bottom">Gioca</button>
       <button id="closeMemoryDialog" class="button-bottom">Chiudi</button>
+    </div>
+  </dialog>
+  <dialog id="memoryEndGameDialog">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Memory Wife</h2>
+    <p id="dialogContent">Bravo! Gioco concluso</p>
+    <div class="dialog-actions">
+      <button id="quitMemoryGameBtn" class="button-bottom">Chiudi</button>
     </div>
   </dialog>
   <!--Chronologic Madness-->
