@@ -46,7 +46,6 @@
 
         <button id="flapppyCelibeBtn" class="chooseGame-btn-style">Flappy Celibe ►</button>
         <button id="memeMemoryBtn" class="chooseGame-btn-style">Memory Wife ►</button>
-        <button id="chronoMadnessBtn" class="chooseGame-btn-style">Chronologic Madness ►</button>
         <button id="finalBossBtn" class="chooseGame-btn-style">Final Boss ►</button>
 
       </div>
@@ -88,18 +87,6 @@
       </div>
       <div id="avatar"></div>
     </section>
-    <section id="chronoMadnessSection">
-      <header id="inGameHeader" class="header-game">
-        <button id="closeChronoMadnessBtn" class="back-ingame-button">&lt;</button>
-        <div>Corretti: <span id="memoryScore">0</span></div>
-      </header>
-      <div id="chronoMadnessContainer" style="overflow-y: auto; padding-bottom: 180px;">
-
-      </div>
-      <div id="avatarChronoMadnessMatte"></div>
-      <div id="avatarChronoMadnessElisa"></div>
-
-    </section>
 
     <!--<div id="app"> -->
     <section id="finalBoss"> <!--tolta class = "hide final-boss-layout"-->
@@ -125,7 +112,7 @@
   <!--DIALOG-->
   <dialog id="dialog" class="dialog-style">
     <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Prima di cominciare...</h2>
-    <p id="dialogContent"></p>
+    <p id="openingDialogContent"></p>
     <div class="dialog-actions">
       <button id="closeDialogBtn" class="button-bottom">Acc' capit</button>
     </div>
@@ -138,63 +125,76 @@
     <div class="skin-container">
 
       <div class="skinContainer">
-        <img class="skinImg" src="/resources/questionMark.png">
-        <label id="skin1Name">Unknown</label>
+        <img id="skin1" class="skinImg" src="/resources/calzSpaccatutto.png">
+        <label id="skin1Name">Calz Spaccatutto</label>
       </div>
 
       <div class="skinContainer">
-        <img class="skinImg" src="/resources/questionMark.png">
-        <label id="skin2Name">Unknown</label>
+        <img id="skin2" class="skinImg" src="/resources/MattRix.png">
+        <label id="skin2Name">Matt-Rix</label>
       </div>
 
       <div class="skinContainer">
-        <img class="skinImg" src="/resources/questionMark.png">
-        <label id="skin3Name">Unknown</label>
+        <img id="skin3" class="skinImg" src="/resources/matteLaccioLasko.png">
+        <label id="skin3Name">Matte Laccio Lasko</label>
       </div>
 
     </div>
-    <button id="closeSkinDialogBtn" class="button-bottom">Acc' capit</button>
+    <button id="closeSkinDialogBtn" class="button-bottom">Ogay</button>
   </dialog>
 
   <!-- ------INIZIO DIALOG GIOCHI ------ -->
   <!--Flappy Celibe-->
-  <dialog id="flappyCelibeOpeningDialog">
+  <dialog id="flappyCelibeOpeningDialog" class="dialog-style">
     <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Flappy Celibe</h2>
-    <p id="dialogContent">Istruzioni</p>
+    <p id="dialogContent">Questo giorno rappresenta, come dice il nome, il tuo addio al celibato. Vola da celibe e
+      schiva i tuoi futuri doveri da marito finché puoi...</p>
     <div class="dialog-actions">
       <button id="playFlappyCelibe" class="button-bottom">Gioca</button>
       <button id="closeFlappyCelibeDialog" class="button-bottom">Chiudi</button>
     </div>
   </dialog>
   <!--Memory-->
-  <dialog id="memoryOpeningDialog">
+  <dialog id="memoryOpeningDialog" class="dialog-style">
     <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Memory Wife</h2>
-    <p id="dialogContent">Istruzioni</p>
+    <p id="dialogContent">"Come non ti sei accorto che mi sono tagliata i capelli?!"<br>"Ma non hai notato la mi
+      giacchetta nuova??"<br>Ecco a te un giochino per fare un po' di pratica con la memoria</p>
     <div class="dialog-actions">
       <button id="playMemory" class="button-bottom">Gioca</button>
       <button id="closeMemoryDialog" class="button-bottom">Chiudi</button>
     </div>
   </dialog>
-  <dialog id="memoryEndGameDialog">
+  <dialog id="memoryEndGameDialog" class="dialog-style">
     <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Memory Wife</h2>
-    <p id="dialogContent">Bravo! Gioco concluso</p>
+    <p id="endgameDialogContent">Bravo Matteo! Gioco concluso. Chiudilo e torna nella home per scoprire la skin
+      sbloccata</p>
     <div class="dialog-actions">
       <button id="quitMemoryGameBtn" class="button-bottom">Chiudi</button>
     </div>
   </dialog>
-  <!--Chronologic Madness-->
-  <dialog id="chronoMadnessOpeningDialog">
-    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Chronologic Madness</h2>
-    <p id="dialogContent">Istruzioni</p>
+  <!-- FINAL BOSS -->
+  <dialog id="finalBossOpeningDialog" class="dialog-style">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">???</h2>
+    <p id="dialogContent">E mo so' cazzi tuoi</p>
     <div class="dialog-actions">
-      <button id="playChronoMadness" class="button-bottom">Gioca</button>
-      <button id="closeChronoMadnessDialog" class="button-bottom">Chiudi</button>
+      <button id="playFinalBoss" class="button-bottom">Gioca</button>
+      <button id="closeFinalBossDialog" class="button-bottom">Chiudi</button>
     </div>
   </dialog>
-  <dialog id="fb-result-dialog" class="result-dialog">
+  <dialog id="fb-result-dialog" class="dialog-style">
     <h3 id="fb-dialog-text"></h3>
     <button id="fb-dialog-btn"></button>
   </dialog>
+
+  <dialog id="flappyCelibeEndGameDialog" class="dialog-style">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Flappy Celibe</h2>
+    <p id="endgameDialogContent">Bravo Matteo! Gioco concluso. Chiudilo e torna nella home per scoprire la skin
+      sbloccata</p>
+    <div class="dialog-actions">
+      <button id="quitFlappyCelibeGameBtn" class="button-bottom">Chiudi</button>
+    </div>
+  </dialog>
+
   <script type="module" src="/src/main.ts"></script>
 </body>
 

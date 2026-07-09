@@ -1,50 +1,52 @@
 // finalBoss.ts
 
-interface Question {
-    text: string;
-    options: string[];
-    correctIndex: number;
-}
-
-// MOCK DI DOMANDE (Da sostituire con quelle vere)
-const questions: Question[] = Array.from({ length: 10 }, (_, i) => ({
-    text: `Domanda random numero ${i + 1}?`,
-    options: ['Risposta A', 'Risposta B', 'Risposta C', 'Risposta D'],
-    correctIndex: Math.floor(Math.random() * 4) // Indice random per test
-}));
-
-// PERCORSI IMMAGINI (sostituisci con i tuoi path reali)
-const AVATARS = {
-
-    groom: {
-        default: './resources/matteDefault.png',
-        correct: './resources/matteCorretto.png',
-        error: './resources/matteErrore.png'
-    },
-
-    bride: {
-        default: './resources/elisaDefault.png',
-        correct: './resources/elisaCorretto.png',
-        error: './resources/elisaErrore.png'
-    }
-};
-
-let currentQuestionIndex = 0;
-let correctAnswers = 0;
-let isAnimating = false;
-
-// Riferimenti DOM
-let section: HTMLElement;
-let headerText: HTMLElement;
-let questionBox: HTMLElement;
-let optionsContainer: HTMLElement;
-let groomAvatar: HTMLImageElement;
-let brideAvatar: HTMLImageElement;
-let dialog: HTMLDialogElement;
-let dialogText: HTMLElement;
-let dialogBtn: HTMLButtonElement;
 
 export function initFinalBoss() {
+
+    interface Question {
+        text: string;
+        options: string[];
+        correctIndex: number;
+    }
+
+    // MOCK DI DOMANDE (Da sostituire con quelle vere)
+    const questions: Question[] = Array.from({ length: 10 }, (_, i) => ({
+        text: `Domanda random numero ${i + 1}?`,
+        options: ['Risposta A', 'Risposta B', 'Risposta C', 'Risposta D'],
+        correctIndex: Math.floor(Math.random() * 4) // Indice random per test
+    }));
+
+    // PERCORSI IMMAGINI (sostituisci con i tuoi path reali)
+    const AVATARS = {
+
+        groom: {
+            default: './resources/matteDefault.png',
+            correct: './resources/matteCorretto.png',
+            error: './resources/matteErrore.png'
+        },
+
+        bride: {
+            default: './resources/elisaDefault.png',
+            correct: './resources/elisaCorretto.png',
+            error: './resources/elisaErrore.png'
+        }
+    };
+
+    let currentQuestionIndex = 0;
+    let correctAnswers = 0;
+    let isAnimating = false;
+
+    // Riferimenti DOM
+    let section: HTMLElement;
+    let headerText: HTMLElement;
+    let questionBox: HTMLElement;
+    let optionsContainer: HTMLElement;
+    let groomAvatar: HTMLImageElement;
+    let brideAvatar: HTMLImageElement;
+    let dialog: HTMLDialogElement;
+    let dialogText: HTMLElement;
+    let dialogBtn: HTMLButtonElement;
+
     // 1. Recupero elementi DOM
     section = document.getElementById('finalBoss')!;
     headerText = document.getElementById('fb-header')!;
@@ -76,73 +78,74 @@ export function initFinalBoss() {
     // 3. Mostra la sezione e carica la prima domanda
     section.classList.remove('hide');
     loadQuestion();
-}
 
-function loadQuestion() {
-    const q = questions[currentQuestionIndex];
 
-    // Reset UI
-    headerText.innerText = `${currentQuestionIndex + 1}/10`;
-    questionBox.innerText = q.text;
-    optionsContainer.innerHTML = '';
+    function loadQuestion() {
+        const q = questions[currentQuestionIndex];
 
-    // Reset Avatar
-    groomAvatar.src = AVATARS.groom.default;
-    brideAvatar.src = AVATARS.bride.default;
-    groomAvatar.classList.remove('animate-reaction');
-    brideAvatar.classList.remove('animate-reaction');
+        // Reset UI
+        headerText.innerText = `${currentQuestionIndex + 1}/10`;
+        questionBox.innerText = q.text;
+        optionsContainer.innerHTML = '';
 
-    // Creazione bottoni
-    q.options.forEach((opt, index) => {
-        const btn = document.createElement('button');
-        btn.innerText = opt;
-        btn.onclick = () => handleAnswer(index, btn, q.correctIndex);
-        optionsContainer.appendChild(btn);
-    });
-}
+        // Reset Avatar
+        groomAvatar.src = AVATARS.groom.default;
+        brideAvatar.src = AVATARS.bride.default;
+        groomAvatar.classList.remove('animate-reaction');
+        brideAvatar.classList.remove('animate-reaction');
 
-function handleAnswer(selectedIndex: number, btnElement: HTMLButtonElement, correctIndex: number) {
-    if (isAnimating) return; // Evita spam di click durante l'animazione
-    isAnimating = true;
-
-    const isCorrect = selectedIndex === correctIndex;
-
-    // Applica stili e cambia avatar
-    if (isCorrect) {
-        btnElement.classList.add('btn-correct');
-        groomAvatar.src = AVATARS.groom.correct;
-        brideAvatar.src = AVATARS.bride.correct;
-        correctAnswers++;
-    } else {
-        btnElement.classList.add('btn-wrong');
-        groomAvatar.src = AVATARS.groom.error;
-        brideAvatar.src = AVATARS.bride.error;
+        // Creazione bottoni
+        q.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.onclick = () => handleAnswer(index, btn, q.correctIndex);
+            optionsContainer.appendChild(btn);
+        });
     }
 
-    groomAvatar.classList.add('animate-reaction');
-    brideAvatar.classList.add('animate-reaction');
+    function handleAnswer(selectedIndex: number, btnElement: HTMLButtonElement, correctIndex: number) {
+        if (isAnimating) return; // Evita spam di click durante l'animazione
+        isAnimating = true;
 
-    // Attesa di 2 secondi
-    setTimeout(() => {
-        currentQuestionIndex++;
+        const isCorrect = selectedIndex === correctIndex;
 
-        if (currentQuestionIndex < 10) {
-            isAnimating = false;
-            loadQuestion();
+        // Applica stili e cambia avatar
+        if (isCorrect) {
+            btnElement.classList.add('btn-correct');
+            groomAvatar.src = AVATARS.groom.correct;
+            brideAvatar.src = AVATARS.bride.correct;
+            correctAnswers++;
         } else {
-            showResult();
+            btnElement.classList.add('btn-wrong');
+            groomAvatar.src = AVATARS.groom.error;
+            brideAvatar.src = AVATARS.bride.error;
         }
-    }, 2000);
-}
 
-function showResult() {
-    dialogText.innerText = `Risposte corrette: ${correctAnswers}/10`;
+        groomAvatar.classList.add('animate-reaction');
+        brideAvatar.classList.add('animate-reaction');
 
-    if (correctAnswers === 10) {
-        dialogBtn.innerText = "Chiudi (Vittoria!)";
-    } else {
-        dialogBtn.innerText = "Riprova (Devi fare 10/10!)";
+        // Attesa di 2 secondi
+        setTimeout(() => {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < 10) {
+                isAnimating = false;
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }, 1500);
     }
 
-    dialog.showModal();
+    function showResult() {
+        dialogText.innerText = `Risposte corrette: ${correctAnswers}/10`;
+
+        if (correctAnswers === 10) {
+            dialogBtn.innerText = "Chiudi (Vittoria!)";
+        } else {
+            dialogBtn.innerText = "Riprova (Devi fare 10/10!)";
+        }
+
+        dialog.showModal();
+    }
 }

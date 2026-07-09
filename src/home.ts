@@ -1,7 +1,6 @@
 import { preloadImage, initFlappyCelibe, destroyFlappyCelibe } from "./flappyCelibe";
 import { initMemory, destroyMemory } from "./memory";
 import { SoundEffect } from "./flappyCelibe";
-import { initChronologicMadness, destroyChronologicMadness } from "./chronologicMadness";
 import { initFinalBoss } from "./finalBoss";
 
 const homeButtonSoundEffect = new SoundEffect('./resources/startSound.wav', 1, false);
@@ -12,13 +11,13 @@ const dialogOpeningSoundEffect = new SoundEffect('./resources/gameOpeningDialogS
 
 
 export function initHome() {
-    const dialogContent = document.getElementById("dialogContent") as HTMLParagraphElement;
+    const openingDialogContent = document.getElementById("openingDialogContent") as HTMLParagraphElement;
     const entryDialogString = `Caro Matteo,\n buongiorno e benvenuto in questo evento speciale.
     Da sempre ti sei contraddistinto per la tua grande abilità nel mondo videoludico. Il fatto che sia un talento, nonché una grandissima passione, è innegrabile.
     Perciò quest'oggi abbiamo deciso di sfidare queste innate abilità che hanno le tue dita (🤤) strutturando il tuo addio al celibato in una maniera un po' insolita.
     Il protagonista sta volta sei tu. Sarai tenuto a giocare a 3 mini videogiochi che, al completamento di ciascuno, ti permetterano di sbloccare una skin.
     La skin ti permetterà di accedere all'attività vera e propria, poiché dovrai (e ripetiamo, dovrai) vestirti fisicamente di quella skin per sostenere l'attività relativa.
-    Solo al compimento dei 3 videogiochi e delle 3 attività avrai accesso al Final Boss vero e proprio: Elisa.
+    Solo al compimento dei 3 videogiochi e delle 3 attività potrai finalmente dire addio al celibato ed avrai così accesso al Final Boss vero e proprio: Elisa.\n
     Questo addio al celibato tanto atteso e tanto voluto dipende solo da te.
     \n
     Buon gioco.
@@ -38,7 +37,7 @@ export function initHome() {
     const chooseMinigameScreen = document.getElementById("chooseMinigame");
     const flappyBirdSection = document.getElementById("flappyBirdSection");
     const memorySection = document.getElementById("memorySection");
-    const chronoMadnessSection = document.getElementById("chronoMadnessSection");
+    //const chronoMadnessSection = document.getElementById("chronoMadnessSection");
     const finalBossSection = document.getElementById("finalBoss");
 
     //Dialog
@@ -75,16 +74,17 @@ export function initHome() {
     const closeMemoryDialog = document.getElementById('closeMemoryDialog');
 
     //Chronologic Madness
-    const chronoMadnessBtn = document.getElementById("chronoMadnessBtn");
-    const closeChronoMadnessBtn = document.getElementById("closeChronoMadnessBtn");
-
-    //Opening Dialog Chronologic Madness
-    const chronoMadnessOpeningDialog = document.getElementById('chronoMadnessOpeningDialog') as HTMLDialogElement;
-    const playChronoMadnessBtn = document.getElementById('playChronoMadness');
-    const closeChronoMadnessDialog = document.getElementById('closeChronoMadnessDialog');
+    //const chronoMadnessBtn = document.getElementById("chronoMadnessBtn");
+    //const closeChronoMadnessBtn = document.getElementById("closeChronoMadnessBtn");
 
     //FinalBoss
     const finalBossBtn = document.getElementById("finalBossBtn");
+    const closeFinalBossBtn = document.getElementById("closeFinalBossBtn");
+
+    //Opening Dialog Chronologic Madness
+    const finalBossOpeningDialog = document.getElementById('finalBossOpeningDialog') as HTMLDialogElement;
+    const playfinalBossBtn = document.getElementById('playFinalBoss');
+    const closefinalBossDialog = document.getElementById('closeFinalBossDialog');
 
     //Event Listener del pulsante "Inizia" - Homescreen
     startBtn?.addEventListener("click", () => {
@@ -95,7 +95,7 @@ export function initHome() {
 
         //memeMemoryBtn?.classList.add("game-non-active");
         //chronoMadnessBtn?.classList.add("game-non-active");
-        dialogContent.innerText = entryDialogString;
+        openingDialogContent.innerText = entryDialogString;
         entryDialog.showModal();
         initialDialogTitleContainer?.focus();
         homeButtonSoundEffect.play();
@@ -216,39 +216,33 @@ export function initHome() {
     });
 
 
-    //Chronological Madness
-    chronoMadnessBtn?.addEventListener("click", () => {
-        chronoMadnessOpeningDialog.showModal();
+    //Final Boss
+    finalBossBtn?.addEventListener("click", () => {
+        finalBossOpeningDialog.showModal();
         dialogOpeningSoundEffect.play();
     });
 
-    playChronoMadnessBtn?.addEventListener("click", () => {
+    playfinalBossBtn?.addEventListener("click", () => {
 
-        chronoMadnessOpeningDialog.close();
+        finalBossOpeningDialog.close();
         chooseMinigameScreen?.classList.add("hide");
-        chronoMadnessSection?.classList.remove('hide');
+        finalBossSection?.classList.remove('hide');
         genericButtonSoundEffect.play();
-        initChronologicMadness();
-
-    });
-
-    closeChronoMadnessDialog?.addEventListener("click", () => {
-        chronoMadnessOpeningDialog.close();
-        genericButtonSoundEffect.play();
-    });
-
-    closeChronoMadnessBtn?.addEventListener("pointerdown", () => {
-        destroyChronologicMadness();
-        chooseMinigameScreen?.classList.remove("hide");
-        chronoMadnessSection?.classList.add('hide');
-        genericButtonSoundEffect.play();
-    });
-
-    //Final Boss
-    finalBossBtn?.addEventListener("click", () => {
-        chooseMinigameScreen?.classList.add("hide");
-        finalBossSection?.classList.remove("hide");
         initFinalBoss();
+        //initChronologicMadness();
+
+    });
+
+    closefinalBossDialog?.addEventListener("click", () => {
+        finalBossOpeningDialog.close();
+        genericButtonSoundEffect.play();
+    });
+
+    closeFinalBossBtn?.addEventListener("pointerdown", () => {
+        //destroyChronologicMadness();
+        chooseMinigameScreen?.classList.remove("hide");
+        finalBossSection?.classList.add('hide');
+        genericButtonSoundEffect.play();
     });
 
 

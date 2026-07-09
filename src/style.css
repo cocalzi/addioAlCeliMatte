@@ -115,6 +115,12 @@ section {
   animation: tilt 6s linear infinite;
 }
 
+.skinContainer{
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
 .skinImg {
   width: 50vw;
   height: auto;

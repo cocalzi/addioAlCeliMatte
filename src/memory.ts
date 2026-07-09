@@ -16,7 +16,7 @@ export function initMemory(containerId: string) {
 
     const gameCompletedSound = new SoundEffect("./resources/gameCompleted.mp3", 1, false);
     const cardSwipeSound = new SoundEffect("./resources/cardSwipe.mp3", 1, false);
-
+    const genericButtonSoundEffect = new SoundEffect('./resources/genericbuttonSound2.mp3', 1, false);
 
     cachedImages.forEach(src => {
         const img = new Image();
@@ -209,11 +209,13 @@ export function initMemory(containerId: string) {
     }
 
     function endMemoryGame(): void {
+        soundtrack?.stop();
         gameCompletedSound.play();
         const quitMemoryGameBtn = document.getElementById("quitMemoryGameBtn");
         endGameDialog.showModal();
 
         quitMemoryGameBtn?.addEventListener("click", () => {
+            genericButtonSoundEffect.play();
             endGameDialog.close();
             destroyMemory();
 

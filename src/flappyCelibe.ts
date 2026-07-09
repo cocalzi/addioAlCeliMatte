@@ -1,14 +1,14 @@
 // Impostazioni e costanti globali per bilanciare il gioco
-const GRAVITY = 1500;
+let GRAVITY = 1500;
 const JUMP_STRENGTH = -450;
 const PIPE_SPEED = 180;
 //const PIPE_SPAWN_RATE = 150; // Quanti frame passano prima di generare un nuovo tubo
 const PIPE_SPAWN_INTERVAL = 2.0; //Intervallo in secondi
 const PIPE_WIDTH = 60;
 const PIPE_GAP = 140; // Spazio verticale in cui lo sposo deve passare
-const SCORE_GOAL = 30;
+const SCORE_GOAL = 10;
 
-
+let gameFinished = false;
 let animationFrameId: number | null = null;
 let boundPointerListener: (() => void) | null = null;
 let scoreLabel: HTMLLabelElement | null = null;
@@ -280,7 +280,13 @@ export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElemen
     const jumpSoundEffect = new SoundEffect('./resources/jump.mp3', 0.5, false);
     const scoreSoundEffect = new SoundEffect('./resources/pointScored3.mp3', 1, false);
     const hurtSoundEffect = new SoundEffect('./resources/hurt.mp3', 1, false);
+    const gameCompletedSound = new SoundEffect("./resources/gameCompleted.mp3", 1, false);
+    const genericButtonSoundEffect = new SoundEffect('./resources/genericbuttonSound2.mp3', 1, false);
+
     soundtrack = new SoundEffect('./resources/duBistGutGenug.mp3', 0.3, true);
+
+    const endGameDialog = document.getElementById("flappyCelibeEndGameDialog") as HTMLDialogElement;
+
     setTimeout(() => {
         soundtrack?.play();
     }, 2500);
@@ -414,6 +420,10 @@ export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElemen
 
             if (p.x < bird.x && !p.passed) { //Incrementa il punteggio
                 score++;
+                if (score === SCORE_GOAL) {
+                    gameFinished = true;
+                    endFlappyCelibeGame()
+                };
                 scoreLabel!.innerText = `${score}/${SCORE_GOAL}`;
                 console.log(`Score: ${score}`);
                 p.passed = true
@@ -442,12 +452,56 @@ export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElemen
             }
         }
 
+        if (gameFinished) {
+            GRAVITY = 0;
+            bird.x += 15;
+        }
+
         // 4. RICHIAMO DEL LOOP
         animationFrameId = requestAnimationFrame(gameLoop);
     }
 
     // Avvia il gioco
     gameLoop(performance.now());
+
+    function endFlappyCelibeGame() {
+
+        setTimeout(() => {
+            soundtrack?.stop();
+            gameCompletedSound.play();
+            const quitFlappyCelibeGameBtn = document.getElementById("quitFlappyCelibeGameBtn");
+            endGameDialog.showModal();
+
+            if (animationFrameId !== null) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+
+            if (boundPointerListener !== null) {
+                window.removeEventListener("pointerdown", boundPointerListener);
+                boundPointerListener = null;
+                console.log("Event listener rimossi.");
+            }
+
+            quitFlappyCelibeGameBtn?.addEventListener("click", () => {
+                genericButtonSoundEffect.play();    
+                endGameDialog.close();
+
+                destroyFlappyCelibe();
+
+                const flappyBirdSection = document.getElementById("flappyBirdSection");
+                const chooseMinigameScreen = document.getElementById("chooseMinigame");
+
+                chooseMinigameScreen?.classList.remove("hide");
+                flappyBirdSection?.classList.add("hide");
+
+
+            })
+        }, 1000);
+
+
+
+    }
 
 }
 
