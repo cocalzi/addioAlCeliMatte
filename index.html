@@ -45,8 +45,8 @@
         <label>Minigiochi disponibili</label>
 
         <button id="flapppyCelibeBtn" class="chooseGame-btn-style">Flappy Celibe ►</button>
-        <button id="memeMemoryBtn" class="chooseGame-btn-style">Memory Wife ►</button>
-        <button id="finalBossBtn" class="chooseGame-btn-style">Final Boss ►</button>
+        <button id="memeMemoryBtn" class="chooseGame-btn-style">???</button>
+        <button id="finalBossBtn" class="chooseGame-btn-style">???</button>
 
       </div>
       <div class="button-bottom-container">
@@ -94,16 +94,17 @@
         <button id="closeFinalBossBtn" class="back-ingame-button">&lt;</button>
         <div>Domanda: <span id="fb-header">1/10</span></div>
       </header>
+      <div id="finalBossContainer" class="final-boss-layout">
+        <div id="fb-question-box" class="question-box">
+        </div>
 
-      <div id="fb-question-box" class="question-box">
-      </div>
+        <div id="fb-options-container" class="options-container">
+        </div>
 
-      <div id="fb-options-container" class="options-container">
-      </div>
-
-      <div class="avatars-container">
-        <img id="fb-groom-avatar" src="./resources/matteDefault.png" alt="Sposo" />
-        <img id="fb-bride-avatar" src="./resources/elisaDefault.png" alt="Sposa" />
+        <div class="avatars-container">
+          <img id="fb-groom-avatar" src="./resources/matteDefault.png" alt="Sposo" />
+          <img id="fb-bride-avatar" src="./resources/elisaDefault.png" alt="Sposa" />
+        </div>
       </div>
     </section>
     <!--</div>-->
@@ -116,7 +117,6 @@
     <div class="dialog-actions">
       <button id="closeDialogBtn" class="button-bottom">Acc' capit</button>
     </div>
-
   </dialog>
 
   <dialog id="skinDialog" class="dialog-style">
@@ -125,18 +125,18 @@
     <div class="skin-container">
 
       <div class="skinContainer">
-        <img id="skin1" class="skinImg" src="/resources/calzSpaccatutto.png">
-        <label id="skin1Name">Calz Spaccatutto</label>
+        <img id="skin1" class="skinImg" src="/resources/questionMark.png">
+        <label id="skin1Name">???</label>
       </div>
 
       <div class="skinContainer">
-        <img id="skin2" class="skinImg" src="/resources/MattRix.png">
-        <label id="skin2Name">Matt-Rix</label>
+        <img id="skin2" class="skinImg" src="/resources/questionMark.png">
+        <label id="skin2Name">???</label>
       </div>
 
       <div class="skinContainer">
-        <img id="skin3" class="skinImg" src="/resources/matteLaccioLasko.png">
-        <label id="skin3Name">Matte Laccio Lasko</label>
+        <img id="skin3" class="skinImg" src="/resources/questionMark.png">
+        <label id="skin3Name">???</label>
       </div>
 
     </div>
@@ -175,18 +175,15 @@
   <!-- FINAL BOSS -->
   <dialog id="finalBossOpeningDialog" class="dialog-style">
     <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">???</h2>
-    <p id="dialogContent">E mo so' cazzi tuoi</p>
+    <p id="dialogContent">Come tutti in videociochi, alla fine c'è un boss finale.<br>Devi rispondere correttamente a
+      tutto.<br>E mo so' cazzi tuoi</p>
     <div class="dialog-actions">
       <button id="playFinalBoss" class="button-bottom">Gioca</button>
       <button id="closeFinalBossDialog" class="button-bottom">Chiudi</button>
     </div>
   </dialog>
-  <dialog id="fb-result-dialog" class="dialog-style">
-    <h3 id="fb-dialog-text"></h3>
-    <button id="fb-dialog-btn"></button>
-  </dialog>
 
-<dialog id="finalBossEndGameDialog" class="dialog-style">
+  <dialog id="finalBossEndGameDialog" class="dialog-style">
     <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Final Boss</h2>
     <p id="endgameFinalBossDialogContent"></p>
     <div class="dialog-actions">
@@ -201,6 +198,17 @@
     <div class="dialog-actions">
       <button id="quitFlappyCelibeGameBtn" class="button-bottom">Chiudi</button>
     </div>
+  </dialog>
+  <!-- FINAL DIALOG -->
+  <dialog id="finalDialog" class="dialog-style">
+    <h2 tabindex="-1" id="dialogTitleContainer" class="header-style">Congratulazioni Matteo!</h2>
+    <p id="openingDialogContent">Come volevasi dimostrare, le tue abilità ti hanno aiutato anche questa volta. Goditi la
+      serata e, se vuoi un indizio su come procederà, controlla la tua ultima skin che hai appena sbloccato. Divertiti!
+      <br><br>(GAY)<br></p>
+    <div class="dialog-actions">
+      <button id="closeFinalDialogBtn" class="button-bottom">Acc' capit</button>
+    </div>
+
   </dialog>
 
   <script type="module" src="/src/main.ts"></script>

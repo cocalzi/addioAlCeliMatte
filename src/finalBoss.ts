@@ -45,16 +45,31 @@ a) Liceo delle Scienze Umane b) Liceo Scientifico c) Liceo Linguistico d) Liceo 
 */
 
 import { SoundEffect } from "./flappyCelibe";
+import { completeMiniGame } from "./storage";
+import { getButtonsCorrectClass, showFinalDialog } from "./home";
+
 
 let soundtrack: SoundEffect | null = null;
 
+let alarmLowHPSoundEffect: SoundEffect | null = new SoundEffect("./resources/pokemonLowHP.mp3", 0.3, true);
+
+export function startFinalBossSoundtrack(): void {
+    soundtrack = new SoundEffect('./resources/pokemonRossoFuoco.mp3', 0.3, true);
+
+    //if (!soundtrack.isPlaying()) {
+    //setTimeout(() => {
+    soundtrack?.play();
+    //}, 2000);
+    //}
+}
+
 export function initFinalBoss() {
 
-    soundtrack = new SoundEffect('./resources/pokemonRed.mp3', 0.3, true);
+    const correctSoundEffect: SoundEffect = new SoundEffect("./resources/pokemonHeal.mp3", 1, false);
+    const errorSoundEffect: SoundEffect = new SoundEffect("./resources/pokemonHit.mp3", 1, false);
+    const gameCompletedSound = new SoundEffect("./resources/gameCompleted.mp3", 1, false);
+    const genericButtonSoundEffect = new SoundEffect('./resources/genericbuttonSound2.mp3', 1, false);
 
-    setTimeout(() => {
-        soundtrack?.play();
-    }, 2000);
 
     interface Option {
         text: string;
@@ -68,7 +83,7 @@ export function initFinalBoss() {
 
     const questions: Question[] = [
         {
-            text: "Qual è l'unico tipo di caffè che bevo",
+            text: "Qual è l'unico tipo di caffè che bevo?",
             options: [
                 {
                     text: "Ginseng",
@@ -295,8 +310,10 @@ export function initFinalBoss() {
         }
     };
 
+    if (alarmLowHPSoundEffect?.isPlaying) alarmLowHPSoundEffect.stop();
     let currentQuestionIndex = 0;
     let correctAnswers = 0;
+    let errors = 0;
     let isAnimating = false;
 
     // Riferimenti DOM
@@ -306,9 +323,7 @@ export function initFinalBoss() {
     let optionsContainer: HTMLElement;
     let groomAvatar: HTMLImageElement;
     let brideAvatar: HTMLImageElement;
-    let dialog: HTMLDialogElement;
-    let dialogText: HTMLElement;
-    let dialogBtn: HTMLButtonElement;
+
 
     // 1. Recupero elementi DOM
     section = document.getElementById('finalBoss')!;
@@ -321,29 +336,29 @@ export function initFinalBoss() {
     brideAvatar = document.getElementById('fb-bride-avatar') as HTMLImageElement;
 
     //Dialog
-    dialog = document.getElementById('fb-result-dialog') as HTMLDialogElement;
-    dialogText = document.getElementById('fb-dialog-text')!;
-    dialogBtn = document.getElementById('fb-dialog-btn') as HTMLButtonElement;
-
-    //Dialog MIO
-    const endgameDialog = document.getElementById("finalBossEndGameDialog") as HTMLDialogElement;
-    let endgameDialogText = document.getElementById("endgameFinalBossDialogContent") as HTMLParagraphElement;
+    const endGameDialog = document.getElementById("finalBossEndGameDialog") as HTMLDialogElement;
+    let endGameDialogText = document.getElementById("endgameFinalBossDialogContent") as HTMLParagraphElement;
     let dialogButtonText = document.getElementById("finalBossTextButton") as HTMLLabelElement;
-    const endgameDialogBtn = document.getElementById("quitFinalBossGameBtn");
+    const endGameDialogBtn = document.getElementById("quitFinalBossGameBtn");
 
     // 2. Reset stato iniziale
     currentQuestionIndex = 0;
     correctAnswers = 0;
+    errors = 0;
     isAnimating = false;
+    endGameDialog.close();
 
     // Binding del pulsante del dialog
-    endgameDialogBtn!.onclick = () => {
-        endgameDialog.close();
+    endGameDialogBtn!.onclick = () => {
+        //endgameDialog.close();
         if (correctAnswers === 10) {
+            endFinalBossGame();
             // LOGICA DI FINE GIOCO GLOBALE (chiudi definitivamente)
             section.classList.add('hide');
+
         } else {
             // RIPROVA
+            genericButtonSoundEffect.play();
             initFinalBoss();
         }
     };
@@ -364,8 +379,10 @@ export function initFinalBoss() {
         // Reset Avatar
         groomAvatar.src = AVATARS.groom.default;
         brideAvatar.src = AVATARS.bride.default;
-        groomAvatar.classList.remove('animate-reaction');
-        brideAvatar.classList.remove('animate-reaction');
+        groomAvatar.classList.remove('anim-correct-matte');
+        brideAvatar.classList.remove('anim-correct-elisa');
+        groomAvatar.classList.remove('anim-error-matte');
+        brideAvatar.classList.remove('anim-error-elisa');
 
         // Creazione bottoni
         let shuffledOptions = shuffle(q.options);
@@ -395,18 +412,33 @@ export function initFinalBoss() {
 
         // Applica stili e cambia avatar
         if (isCorrect) {
+            correctSoundEffect.play();
             btnElement.classList.add('btn-correct');
             groomAvatar.src = AVATARS.groom.correct;
             brideAvatar.src = AVATARS.bride.correct;
+            groomAvatar.classList.add('anim-correct-matte');
+            brideAvatar.classList.add('anim-correct-elisa');
+
             correctAnswers++;
         } else {
+            errorSoundEffect.play();
             btnElement.classList.add('btn-wrong');
             groomAvatar.src = AVATARS.groom.error;
             brideAvatar.src = AVATARS.bride.error;
+            groomAvatar.classList.add('anim-error-matte');
+            brideAvatar.classList.add('anim-error-elisa');
+
+            errors++;
+            if (errors === 1) {
+                if (alarmLowHPSoundEffect?.isPlaying) {
+                    setTimeout(() => { alarmLowHPSoundEffect?.play() }, 500);
+                };
+                //play Low Health Sound in loop
+            }
         }
 
-        groomAvatar.classList.add('animate-reaction');
-        brideAvatar.classList.add('animate-reaction');
+        //groomAvatar.classList.add('animate-reaction');
+        //brideAvatar.classList.add('animate-reaction');
 
         // Attesa di 2 secondi
         setTimeout(() => {
@@ -422,15 +454,18 @@ export function initFinalBoss() {
     }
 
     function showResult() {
-        endgameDialogText.innerText = `Risposte corrette: ${correctAnswers}/10`;
+        endGameDialogText.innerText = `Risposte corrette: ${correctAnswers}/10`;
 
         if (correctAnswers === 10) {
+            gameCompletedSound.play();
+            soundtrack?.stop();
+            //endFinalBossGame();
             dialogButtonText.innerText = "Chiudi";
         } else {
             dialogButtonText.innerText = "Riprova (Devi fare 10/10!)";
         }
 
-        endgameDialog.showModal();
+        endGameDialog.showModal();
     }
 
     function shuffle<T>(array: T[]): T[] {
@@ -445,10 +480,34 @@ export function initFinalBoss() {
         return result;
     }
 
+    function endFinalBossGame(): void {
+        //soundtrack?.stop();
+        //gameCompletedSound.play();
+        //const quitMemoryGameBtn = document.getElementById("quitMemoryGameBtn");
+        //endGameDialog.showModal();
+
+        //quitMemoryGameBtn?.addEventListener("click", () => {
+        genericButtonSoundEffect.play();
+        endGameDialog.close();
+        destroyFinalBoss();
+
+        //const memorySection = document.getElementById("memorySection");
+        const chooseMinigameScreen = document.getElementById("chooseMinigame");
+
+        section?.classList.add("hide");
+        chooseMinigameScreen?.classList.remove("hide");
+
+        completeMiniGame(2); //Salva il progresso
+        getButtonsCorrectClass(); //Aggiorna le classi dei bottoni
+        showFinalDialog();
+        //genericButtonSoundEffect.play();
+        //})
+    }
 
 }
 
 export function destroyFinalBoss(): void {
     soundtrack?.stop();
+    if (alarmLowHPSoundEffect?.isPlaying) alarmLowHPSoundEffect?.stop();
     soundtrack = null;
 }

@@ -1,14 +1,83 @@
 import { preloadImage, initFlappyCelibe, destroyFlappyCelibe } from "./flappyCelibe";
 import { initMemory, destroyMemory } from "./memory";
 import { SoundEffect } from "./flappyCelibe";
-import { initFinalBoss, destroyFinalBoss } from "./finalBoss";
-
+import { startFinalBossSoundtrack, initFinalBoss, destroyFinalBoss } from "./finalBoss";
+import { getProgress, resetProgress } from "./storage";
 
 const homeButtonSoundEffect = new SoundEffect('./resources/startSound.wav', 1, false);
 const genericButtonSoundEffect = new SoundEffect('./resources/genericbuttonSound2.mp3', 1, false);
 const dialogOpeningSoundEffect = new SoundEffect('./resources/gameOpeningDialogSound.wav', 1, false);
 
+let progress: boolean[] = getProgress();
+//progress = [true, true, false];
 
+// --------COMMENTARE QUESTA FUNZIONE 
+//resetProgress();
+
+//DOM
+const homeScreen = document.getElementById("home");
+
+//-------Istanziamento di tutti i pulsanti
+
+const startBtn = document.getElementById("btnHome");
+const closeInitialDialogBtn = document.getElementById("closeDialogBtn");
+
+//Sections
+const chooseMinigameScreen = document.getElementById("chooseMinigame");
+const flappyBirdSection = document.getElementById("flappyBirdSection");
+const memorySection = document.getElementById("memorySection");
+//const chronoMadnessSection = document.getElementById("chronoMadnessSection");
+const finalBossSection = document.getElementById("finalBoss");
+
+//Dialog
+//Entry Dialog
+const entryDialog = document.getElementById("dialog") as HTMLDialogElement;
+const initialDialogTitleContainer = document.getElementById("dialogTitleContainer");
+
+//Skin Dialog
+const skinDialog = document.getElementById("skinDialog") as HTMLDialogElement;
+const openSkinDialogBtn = document.getElementById("openSkinDialogBtn");
+const closeSkinDialogBtn = document.getElementById("closeSkinDialogBtn");
+
+//Final Dialog
+const finalDialog = document.getElementById("finalDialog") as HTMLDialogElement;
+const closeFinalDialogBtn = document.getElementById("closeFinalDialogBtn");
+
+//Close Mini Game Button
+const closeGamesSectionBtn = document.getElementById("closeGamesSection");
+
+//Button dei giochi
+
+//Flappy Celibe
+const flapppyCelibeBtn = document.getElementById("flapppyCelibeBtn") as HTMLButtonElement;
+const closeFlappyCelibeBtn = document.getElementById("closeFlappyCelibeBtn");
+
+//OpeningDialog Flappy Celibe
+const flappyCelibeOpeningDialog = document.getElementById('flappyCelibeOpeningDialog') as HTMLDialogElement;
+const playFlappyCelibeBtn = document.getElementById('playFlappyCelibe');
+const closeFlappyCelibeOpeningDialog = document.getElementById('closeFlappyCelibeDialog');
+
+//Memory
+const memoryBtn = document.getElementById("memeMemoryBtn") as HTMLButtonElement;
+const closeMemoryBtn = document.getElementById("closeMemoryBtn");
+
+//OpeningDialog Memory Wife
+const memoryOpeningDialog = document.getElementById('memoryOpeningDialog') as HTMLDialogElement;
+const playMemoryBtn = document.getElementById('playMemory');
+const closeMemoryDialog = document.getElementById('closeMemoryDialog');
+
+//Chronologic Madness
+//const chronoMadnessBtn = document.getElementById("chronoMadnessBtn");
+//const closeChronoMadnessBtn = document.getElementById("closeChronoMadnessBtn");
+
+//FinalBoss
+const finalBossBtn = document.getElementById("finalBossBtn") as HTMLButtonElement;
+const closeFinalBossBtn = document.getElementById("closeFinalBossBtn");
+
+//Opening Dialog Chronologic Madness
+const finalBossOpeningDialog = document.getElementById('finalBossOpeningDialog') as HTMLDialogElement;
+const playfinalBossBtn = document.getElementById('playFinalBoss');
+const closefinalBossDialog = document.getElementById('closeFinalBossDialog');
 
 
 export function initHome() {
@@ -27,65 +96,10 @@ export function initHome() {
     \n`;
 
 
-    const homeScreen = document.getElementById("home");
 
-    //-------Istanziamento di tutti i pulsanti
 
-    const startBtn = document.getElementById("btnHome");
-    const closeInitialDialogBtn = document.getElementById("closeDialogBtn");
-
-    //Sections
-    const chooseMinigameScreen = document.getElementById("chooseMinigame");
-    const flappyBirdSection = document.getElementById("flappyBirdSection");
-    const memorySection = document.getElementById("memorySection");
-    //const chronoMadnessSection = document.getElementById("chronoMadnessSection");
-    const finalBossSection = document.getElementById("finalBoss");
-
-    //Dialog
-    //Entry Dialog
-    const entryDialog = document.getElementById("dialog") as HTMLDialogElement;
-    const initialDialogTitleContainer = document.getElementById("dialogTitleContainer");
-
-    //Skin Dialog
-    const skinDialog = document.getElementById("skinDialog") as HTMLDialogElement;
-    const openSkinDialogBtn = document.getElementById("openSkinDialogBtn");
-    const closeSkinDialogBtn = document.getElementById("closeSkinDialogBtn");
-
-    //Close Mini Game Button
-    const closeGamesSectionBtn = document.getElementById("closeGamesSection");
-
-    //Button dei giochi
-
-    //Flappy Celibe
-    const flapppyCelibeBtn = document.getElementById("flapppyCelibeBtn");
-    const closeFlappyCelibeBtn = document.getElementById("closeFlappyCelibeBtn");
-
-    //OpeningDialog Flappy Celibe
-    const flappyCelibeOpeningDialog = document.getElementById('flappyCelibeOpeningDialog') as HTMLDialogElement;
-    const playFlappyCelibeBtn = document.getElementById('playFlappyCelibe');
-    const closeFlappyCelibeOpeningDialog = document.getElementById('closeFlappyCelibeDialog');
-
-    //Memory
-    const memoryBtn = document.getElementById("memeMemoryBtn");
-    const closeMemoryBtn = document.getElementById("closeMemoryBtn");
-
-    //OpeningDialog Memory Wife
-    const memoryOpeningDialog = document.getElementById('memoryOpeningDialog') as HTMLDialogElement;
-    const playMemoryBtn = document.getElementById('playMemory');
-    const closeMemoryDialog = document.getElementById('closeMemoryDialog');
-
-    //Chronologic Madness
-    //const chronoMadnessBtn = document.getElementById("chronoMadnessBtn");
-    //const closeChronoMadnessBtn = document.getElementById("closeChronoMadnessBtn");
-
-    //FinalBoss
-    const finalBossBtn = document.getElementById("finalBossBtn");
-    const closeFinalBossBtn = document.getElementById("closeFinalBossBtn");
-
-    //Opening Dialog Chronologic Madness
-    const finalBossOpeningDialog = document.getElementById('finalBossOpeningDialog') as HTMLDialogElement;
-    const playfinalBossBtn = document.getElementById('playFinalBoss');
-    const closefinalBossDialog = document.getElementById('closeFinalBossDialog');
+    //Aggiorna subito le classi dei bottoni
+    getButtonsCorrectClass();
 
     //Event Listener del pulsante "Inizia" - Homescreen
     startBtn?.addEventListener("click", () => {
@@ -230,6 +244,7 @@ export function initHome() {
         finalBossSection?.classList.remove('hide');
         genericButtonSoundEffect.play();
         initFinalBoss();
+        startFinalBossSoundtrack();
         //initChronologicMadness();
 
     });
@@ -265,4 +280,61 @@ export function initHome() {
         genericButtonSoundEffect.play();
         entryDialog.close();
     });
+
 }
+
+export function getButtonsCorrectClass(): void {
+    progress = getProgress();
+    //progress = [true, true, false];
+
+    if (progress[0] === false) {
+        memoryBtn.disabled = true;
+        // /resources/calzSpaccatutto.png Calz Spaccatutto
+    }
+    else {
+        const imgSkin1 = document.getElementById("skin1") as HTMLImageElement;
+        const skin1Name = document.getElementById("skin1Name") as HTMLLabelElement;
+
+        imgSkin1.src = './resources/calzSpaccatutto.png';
+        skin1Name!.innerHTML = 'Calz Spaccatutto';
+
+
+        memoryBtn.disabled = false;
+        memoryBtn.innerText = 'Memory Wife ►';
+        // ./resources/MattRix.png Matt-Rix  Memory Wife ►
+    }
+
+    if (progress[1] === false) {
+        finalBossBtn.disabled = true;
+        // ./resources/matteLaccioLasko.png Matte Laccio Lasko Final Boss ►
+    }
+    else {
+        const imgSkin2 = document.getElementById("skin2") as HTMLImageElement;
+        const skin2Name = document.getElementById("skin2Name") as HTMLLabelElement;
+
+        imgSkin2.src = './resources/MattRix.png';
+        skin2Name!.innerHTML = 'Matt-Rix';
+
+        finalBossBtn.disabled = false;
+        finalBossBtn.innerText = 'Final Boss ►';
+    }
+
+    if (progress[2] === false) {
+
+    } else {
+        {
+            const imgSkin3 = document.getElementById("skin3") as HTMLImageElement;
+            const skin3Name = document.getElementById("skin3Name") as HTMLLabelElement;
+
+            imgSkin3.src = './resources/matteLaccioLasko.png';
+            skin3Name!.innerHTML = 'Matte Laccio Lasko';
+        }
+    }
+}
+
+export function showFinalDialog(): void {
+    finalDialog?.showModal();
+}
+closeFinalDialogBtn?.addEventListener("click", () => {
+    finalDialog?.close();
+});

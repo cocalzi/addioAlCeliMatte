@@ -1,3 +1,5 @@
+import { getButtonsCorrectClass } from "./home";
+import { completeMiniGame } from "./storage";
 // Impostazioni e costanti globali per bilanciare il gioco
 let GRAVITY = 1500;
 const JUMP_STRENGTH = -450;
@@ -5,7 +7,7 @@ const PIPE_SPEED = 180;
 //const PIPE_SPAWN_RATE = 150; // Quanti frame passano prima di generare un nuovo tubo
 const PIPE_SPAWN_INTERVAL = 2.0; //Intervallo in secondi
 const PIPE_WIDTH = 60;
-const PIPE_GAP = 140; // Spazio verticale in cui lo sposo deve passare
+let PIPE_GAP = 140; // Spazio verticale in cui lo sposo deve passare
 const SCORE_GOAL = 10;
 
 
@@ -258,6 +260,10 @@ export class SoundEffect {
         this.sound.pause();
         this.sound.currentTime = 0;
     }
+
+    isPlaying(): boolean {
+        return !this.sound.paused && !this.sound.ended;
+    }
 }
 
 
@@ -289,7 +295,7 @@ export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElemen
 
     setTimeout(() => {
         soundtrack?.play();
-    }, 2500);
+    }, 1000);
 
 
     scoreLabel = document.getElementById("flappyCelibeScoreLabel") as HTMLLabelElement;
@@ -347,6 +353,7 @@ export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElemen
             jumpSoundEffect.play();
         } else {
             // Se è game over, un click potrebbe resettare o fare il restart
+            PIPE_GAP += 10;
             resetGame();
         }
     };
@@ -469,7 +476,8 @@ export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElemen
     gameLoop(performance.now());
 
     function endFlappyCelibeGame() {
-
+        completeMiniGame(0);
+        getButtonsCorrectClass();
         setTimeout(() => {
             soundtrack?.stop();
             gameCompletedSound.play();

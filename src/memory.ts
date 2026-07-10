@@ -1,8 +1,14 @@
+import { completeMiniGame } from "./storage";
 import { SoundEffect } from "./flappyCelibe";
+import { getButtonsCorrectClass } from "./home";
 
 let soundtrack: SoundEffect | null = null;
+let avatarImageContainer: HTMLDivElement | null = null;
 
 export function initMemory(containerId: string) {
+
+    avatarImageContainer = document.getElementById("avatar") as HTMLDivElement;
+    avatarImageContainer?.classList.add("addAvatarImage");
     /*
         setTimeout(() => {
             endMemoryGame();
@@ -224,7 +230,8 @@ export function initMemory(containerId: string) {
 
             chooseMinigameScreen?.classList.remove("hide");
             memorySection?.classList.add("hide");
-
+            completeMiniGame(1); //Salva il progresso
+            getButtonsCorrectClass(); //Aggiorna le classi dei bottoni
             //genericButtonSoundEffect.play();
         })
 
@@ -233,6 +240,8 @@ export function initMemory(containerId: string) {
 }
 
 export function destroyMemory(): void {
+    avatarImageContainer?.classList.remove("addAvatarImage");
+    avatarImageContainer = null;
     soundtrack?.stop();
     soundtrack = null;
 }
