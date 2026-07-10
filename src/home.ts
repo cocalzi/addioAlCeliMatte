@@ -1,7 +1,7 @@
 import { preloadImage, initFlappyCelibe, destroyFlappyCelibe } from "./flappyCelibe";
 import { initMemory, destroyMemory } from "./memory";
 import { SoundEffect } from "./flappyCelibe";
-import { startFinalBossSoundtrack, initFinalBoss, destroyFinalBoss } from "./finalBoss";
+import { startFinalBossSoundtrack, preloadFinalBossImages, initFinalBoss, destroyFinalBoss } from "./finalBoss";
 import { getProgress, resetProgress } from "./storage";
 
 const homeButtonSoundEffect = new SoundEffect('./resources/startSound.wav', 1, false);
@@ -85,7 +85,7 @@ export function initHome() {
     const entryDialogString = `Caro Matteo,\n buongiorno e benvenuto in questo evento speciale.
     Da sempre ti sei contraddistinto per la tua grande abilità nel mondo videoludico. Il fatto che sia un talento, nonché una grandissima passione, è innegrabile.
     Perciò quest'oggi abbiamo deciso di sfidare queste innate abilità che hanno le tue dita (🤤) strutturando il tuo addio al celibato in una maniera un po' insolita.
-    Il protagonista sta volta sei tu. Sarai tenuto a giocare a 3 mini videogiochi che, al completamento di ciascuno, ti permetterano di sbloccare una skin.
+    Il protagonista del gioco sta volta sei tu. Sarai tenuto a giocare 3 mini videogiochi che, al completamento di ciascuno, ti permetterano di sbloccare una skin.
     La skin ti permetterà di accedere all'attività vera e propria, poiché dovrai (e ripetiamo, dovrai) vestirti fisicamente di quella skin per sostenere l'attività relativa.
     Solo al compimento dei 3 videogiochi e delle 3 attività potrai finalmente dire addio al celibato ed avrai così accesso al Final Boss vero e proprio: Elisa.\n
     Questo addio al celibato tanto atteso e tanto voluto dipende solo da te.
@@ -95,7 +95,7 @@ export function initHome() {
     (Gay)
     \n`;
 
-
+    preloadFinalBossImages();
 
 
     //Aggiorna subito le classi dei bottoni

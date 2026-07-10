@@ -49,9 +49,48 @@ import { completeMiniGame } from "./storage";
 import { getButtonsCorrectClass, showFinalDialog } from "./home";
 
 
+let groomAvatar: HTMLImageElement;
+let brideAvatar: HTMLImageElement;
+
 let soundtrack: SoundEffect | null = null;
 
 let alarmLowHPSoundEffect: SoundEffect | null = new SoundEffect("./resources/pokemonLowHP.mp3", 0.3, true);
+
+/*
+        groom: {
+            default: './resources/matteDefault.png',
+            correct: './resources/matteCorretto.png',
+            error: './resources/matteErrore.png'
+        },
+
+        bride: {
+            default: './resources/elisaDefault.png',
+            correct: './resources/elisaCorretto.png',
+            error: './resources/elisaErrore.png'
+        }
+*/
+
+export function preloadFinalBossImages(): void {
+
+    const cachedImages = [
+        './resources/matteDefault.png',
+        './resources/matteCorretto.png',
+        './resources/matteErrore.png',
+        './resources/elisaDefault.png',
+        './resources/elisaCorretto.png',
+        './resources/elisaErrore.png',
+    ];
+
+    cachedImages.forEach((src) => {
+        let img = new Image();
+        img.src = src;
+    });
+
+    //Avatar
+    groomAvatar = document.getElementById('fb-groom-avatar') as HTMLImageElement;
+    brideAvatar = document.getElementById('fb-bride-avatar') as HTMLImageElement;
+
+}
 
 export function startFinalBossSoundtrack(): void {
     soundtrack = new SoundEffect('./resources/pokemonRossoFuoco.mp3', 0.3, true);
@@ -321,8 +360,7 @@ export function initFinalBoss() {
     let headerText: HTMLElement;
     let questionBox: HTMLElement;
     let optionsContainer: HTMLElement;
-    let groomAvatar: HTMLImageElement;
-    let brideAvatar: HTMLImageElement;
+
 
 
     // 1. Recupero elementi DOM
@@ -331,9 +369,7 @@ export function initFinalBoss() {
     questionBox = document.getElementById('fb-question-box')!;
     optionsContainer = document.getElementById('fb-options-container')!;
 
-    //Avatar
-    groomAvatar = document.getElementById('fb-groom-avatar') as HTMLImageElement;
-    brideAvatar = document.getElementById('fb-bride-avatar') as HTMLImageElement;
+
 
     //Dialog
     const endGameDialog = document.getElementById("finalBossEndGameDialog") as HTMLDialogElement;
@@ -454,14 +490,16 @@ export function initFinalBoss() {
     }
 
     function showResult() {
-        endGameDialogText.innerText = `Risposte corrette: ${correctAnswers}/10`;
+
 
         if (correctAnswers === 10) {
+            endGameDialogText.innerText = `Risposte corrette: ${correctAnswers}/10. Bravo Matteo!`;
             gameCompletedSound.play();
             soundtrack?.stop();
             //endFinalBossGame();
-            dialogButtonText.innerText = "Chiudi";
+            dialogButtonText.innerText = "Torna alla home";
         } else {
+            endGameDialogText.innerText = `Risposte corrette: ${correctAnswers}/10`;
             dialogButtonText.innerText = "Riprova (Devi fare 10/10!)";
         }
 

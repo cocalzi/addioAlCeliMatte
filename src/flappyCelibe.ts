@@ -56,12 +56,13 @@ class GroomBird {
     }
 
     public draw(ctx: CanvasRenderingContext2D, isGameOver: boolean): void {
+        /*
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = "#007BFF"; // Sposo (Blu)
         ctx.fill();
         ctx.closePath();
-
+*/
         let currImage: HTMLImageElement;
 
 
@@ -277,6 +278,8 @@ export function preloadImage(src: string): Promise<HTMLImageElement> {
     });
 }
 
+export function preloadFlappyCelibeResources(): void { }
+
 // --- MOTORE DEL GIOCO ---
 export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElement[] | null, onGameOver?: (finalScore: number) => void): void {
     console.log(cachedImages);
@@ -309,7 +312,7 @@ export function initFlappyCelibe(canvasId: string, cachedImages: HTMLImageElemen
     let lastTime: number = 0;
 
     //Definiamo oggetti del gioco e risorse
-    const Background = new scrollingBackground('./resources/background.png', 960, 30);
+    const Background = new scrollingBackground('./resources/background.png', 960, 20);
     const choreImages: HTMLImageElement[] = [];
     const imagePaths = [
         'resources/asciugamani.png',
