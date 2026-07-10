@@ -115,6 +115,39 @@ section {
   animation: tilt 6s linear infinite;
 }
 
+.hoomescreenImgBack2 {
+  position: absolute;
+  top: +10%; /* Sposta in alto rispetto al bordo superiore del contenitore */
+  right: +72%; /* Sposta a destra rispetto al bordo destro del contenitore */
+  width: 30vw;
+  height: auto;
+  /* Sta sotto */
+  z-index: 1;
+  animation: tilt 6s linear infinite;
+}
+
+.hoomescreenImgBack3 {
+  position: absolute;
+  top: +10%; /* Sposta in alto rispetto al bordo superiore del contenitore */
+  right: -10%; /* Sposta a destra rispetto al bordo destro del contenitore */
+  width: 40vw;
+  height: auto;
+  /* Sta sotto */
+  z-index: 1;
+  animation: tilt 6s linear infinite;
+}
+
+.hoomescreenImgBack4 {
+  position: absolute;
+  top: +65%; /* Sposta in alto rispetto al bordo superiore del contenitore */
+  right: +60%; /* Sposta a destra rispetto al bordo destro del contenitore */
+  width: 45vw;
+  height: auto;
+  /* Sta sotto */
+  z-index: 1;
+  animation: tilt 6s linear infinite;
+}
+
 .skinContainer {
   display: flex;
   flex-direction: column;
@@ -254,8 +287,8 @@ input {
 
 .chooseGame-btn-style:disabled {
   background-color: #7b7b7b; /* Grigio chiaro */
-  pointer-events: none;      /* Disattiva tutti i click del mouse */
-  cursor: not-allowed;       /* Mostra l'icona di divieto (opzionale) */
+  pointer-events: none; /* Disattiva tutti i click del mouse */
+  cursor: not-allowed; /* Mostra l'icona di divieto (opzionale) */
 }
 
 .cover-word-container {
@@ -588,11 +621,10 @@ h2 {
   100% {
     transform: translateX(0px);
   }
- 
+
   50% {
     transform: translateX(-40px); /*scale(1.05);*/
   }
-
 }
 
 /*---LOADING SCREEN FLAPPY CELIBE---*/

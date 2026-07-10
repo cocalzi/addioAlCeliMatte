@@ -2,7 +2,7 @@ import { preloadImage, initFlappyCelibe, destroyFlappyCelibe } from "./flappyCel
 import { initMemory, destroyMemory } from "./memory";
 import { SoundEffect } from "./flappyCelibe";
 import { startFinalBossSoundtrack, preloadFinalBossImages, initFinalBoss, destroyFinalBoss } from "./finalBoss";
-import { getProgress, resetProgress } from "./storage";
+import { getProgress/*, resetProgress*/ } from "./storage";
 
 const homeButtonSoundEffect = new SoundEffect('./resources/startSound.wav', 1, false);
 const genericButtonSoundEffect = new SoundEffect('./resources/genericbuttonSound2.mp3', 1, false);
